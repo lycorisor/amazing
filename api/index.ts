@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
-import { loginWithUsernamePasswordWithAuthResponse } from "@azure/ms-rest-nodeauth";
+import { loginWithUsernamePasswordWithAuthResponse, AzureEnvironment } from "@azure/ms-rest-nodeauth";
 
 const app = express();
 
@@ -16,6 +16,8 @@ app.get("/api/subscriptions", async (req, res) => {
     const authResponse = await loginWithUsernamePasswordWithAuthResponse(
       email,
       password,
+      undefined, // clientId, if you have one
+      AzureEnvironment.AzureChina // specify the Azure environment
     );
     res.json(authResponse?.subscriptions);
   } catch (error) {
